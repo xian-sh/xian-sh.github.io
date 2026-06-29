@@ -106,25 +106,21 @@
             color: #111;
         }
 
-        /* 条目列表样式 */
+        /* ===== 修改：条目列表样式 — 无小黑点 ===== */
         .cv-list {
             list-style: none;
-            padding-left: 0.2rem;
+            padding-left: 0;
             margin-bottom: 0.2rem;
         }
 
         .cv-list li {
             margin-bottom: 0.4rem;
-            padding-left: 1.2rem;
+            padding-left: 0;
             position: relative;
         }
 
         .cv-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0.1rem;
-            color: #222;
-            font-size: 1.2rem;
+            content: none;
         }
 
         /* 子条目（例如出版物中的编号） */
@@ -291,15 +287,13 @@
         <div class="contact-block">
             <div><i class="fas fa-envelope"></i> <a href="mailto:xianhjj623@gmail.com">xianhjj623@gmail.com</a></div>
             <div style="margin-top:0.2rem;"><i class="fas fa-map-pin"></i> PostalCode: 230601</div>
-            <!-- 可选：添加 GitHub / LinkedIn 占位 -->
-            <!-- <div><i class="fab fa-github"></i> <a href="#">github.com/username</a></div> -->
         </div>
     </div>
 
     <!-- ========== 研究兴趣 ========== -->
     <div class="section-title">Research Interests</div>
     <ul class="cv-list" style="margin-bottom: 0.8rem;">
-        <li style="text-align: justify; padding-left:0.2rem; list-style:none;">
+        <li style="text-align: justify; padding-left:0; list-style:none;">
             Multimodal affective computing, computer vision, and machine learning, with a focus on cross-modal alignment, video grounding, bodily behavior understanding, and brain signal decoding for brain-computer interfaces. Author of 16 peer-reviewed papers (6 first-author) at venues including <i>IEEE TPAMI</i>, <i>ICML</i>, <i>ACM MM</i>, and <i>AAAI</i>.
         </li>
     </ul>
@@ -407,7 +401,7 @@
         <li>Dan Guo, Haofan Cheng, <strong><u>Jingjing Hu</u></strong>, and Meng Wang. "An EEG Personality Prediction Method and System Based on Time-Frequency Dual-Stream Convolutional Attention Network" (<span class="highlight-red">Patent, Submitted</span>).</li>
     </ol>
 
-    <!-- 页脚留白，与LaTeX风格一致 -->
+    <!-- 页脚留白 -->
     <div style="margin-top:1.5rem; font-size:0.75rem; color:#777; border-top:1px solid #eee; padding-top:0.5rem; text-align:center;">
         <!-- 可选 footer -->
     </div>
