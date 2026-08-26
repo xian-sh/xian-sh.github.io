@@ -160,7 +160,13 @@ const awards = [
 ];
 let lang="en";
 function link(label,url){return url?'<a href="'+url+'" target="_blank">['+label+']</a>':''}
-function highlightMyName(authors){return authors.replace(/J\. Hu\*?/g,name=>'<strong class="my-name">'+name+'</strong>')}
+// function highlightMyName(authors){return authors.replace(/J\. Hu\*?/g,name=>'<strong class="my-name">'+name+'</strong>')}
+function highlightMyName(authors){
+  return authors.replace(
+    /J\. Hu\*?(?![A-Za-z])/g,
+    name => '<strong class="my-name">' + name + '</strong>'
+  );
+}
 function renderPublications(){
   document.getElementById("primaryPublications").innerHTML=primary.map((p,i)=>'<article class="publication"><div>'+(p[0]?'<img class="pub-img" src="'+p[0]+'" alt="">':'<div class="pub-placeholder">'+String(i+1).padStart(2,"0")+'</div>')+'</div><div class="pub"><h3>'+p[1]+'</h3><p>'+highlightMyName(p[2])+'</p><p><em>'+p[3]+'</em></p><p class="meta">'+p[4]+' <span class="links">'+link("Paper",p[5])+link("Code",p[6])+link("Poster",p[7])+'</span></p></div></article>').join("");
   document.getElementById("coauthorPublications").innerHTML=coauthors.map((p,i)=>'<article class="publication"><div>'+(p[0]?'<img class="pub-img" src="'+p[0]+'" alt="">':'<div class="pub-placeholder">C'+String(i+1).padStart(2,"0")+'</div>')+'</div><div class="pub"><h3>'+p[1]+'</h3><p>'+highlightMyName(p[2])+'</p><p><em>'+p[3]+'</em></p><p class="meta">'+p[4]+' <span class="links">'+link("Paper",p[5])+link("Code",p[6])+'</span></p></div></article>').join("");
