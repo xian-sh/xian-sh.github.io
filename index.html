@@ -1,410 +1,181 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jingjing Hu · Academic CV</title>
-    <!-- 引入 Inter 字体，接近 LaTeX 的质感 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <!-- Font Awesome 用于小图标 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* ----- 全局重置 & 基础样式 (模仿 LaTeX article) ----- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
-            background: #fafafa;
-            color: #1e1e1e;
-            line-height: 1.5;
-            padding: 2rem 1rem;
-            display: flex;
-            justify-content: center;
-        }
-
-        .cv-container {
-            max-width: 1000px;
-            width: 100%;
-            background: #ffffff;
-            padding: 2rem 2.2rem 2.5rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            border-radius: 4px;
-        }
-
-        /* 标题部分 — 模仿 LaTeX \section 风格 */
-        h1, h2, h3, h4 {
-            font-weight: 500;
-            letter-spacing: -0.01em;
-        }
-
-        /* 顶部姓名 + 联系方式 (双栏) */
-        .header-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1.2rem;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 0.8rem;
-        }
-
-        .name-title h1 {
-            font-size: 2.6rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            color: #111;
-            margin-bottom: 0.2rem;
-        }
-
-        .address-block {
-            font-size: 0.95rem;
-            color: #2c2c2c;
-            line-height: 1.6;
-            margin-top: 0.4rem;
-        }
-
-        .contact-block {
-            text-align: right;
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-top: 0.4rem;
-        }
-
-        .contact-block a {
-            color: #1a1a1a;
-            text-decoration: none;
-            border-bottom: 1px dotted #aaa;
-        }
-
-        .contact-block a:hover {
-            color: #000;
-            border-bottom: 1px solid #000;
-        }
-
-        .contact-block i {
-            width: 1.2rem;
-            color: #3d3d3d;
-            margin-right: 0.2rem;
-        }
-
-        /* 通用章节标题 — 仿 \section{...} */
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            margin: 1.6rem 0 0.6rem 0;
-            padding-bottom: 0.1rem;
-            border-bottom: 1.5px solid #222;
-            text-transform: uppercase;
-            font-style: italic;
-            color: #111;
-        }
-
-        /* ===== 修改：条目列表样式 — 无小黑点 ===== */
-        .cv-list {
-            list-style: none;
-            padding-left: 0;
-            margin-bottom: 0.2rem;
-        }
-
-        .cv-list li {
-            margin-bottom: 0.4rem;
-            padding-left: 0;
-            position: relative;
-        }
-
-        .cv-list li::before {
-            content: none;
-        }
-
-        /* 子条目（例如出版物中的编号） */
-        .cv-list-numbered {
-            list-style: none;
-            padding-left: 0;
-            counter-reset: pub-counter;
-        }
-
-        .cv-list-numbered li {
-            counter-increment: pub-counter;
-            margin-bottom: 0.8rem;
-            padding-left: 2rem;
-            position: relative;
-            text-align: justify;
-        }
-
-        .cv-list-numbered li::before {
-            content: counter(pub-counter) ".";
-            position: absolute;
-            left: 0.2rem;
-            font-weight: 500;
-            color: #222;
-        }
-
-        /* 简历条目 (类似 \resumeSubheading) */
-        .subheading {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-top: 0.3rem;
-        }
-
-        .subheading .title {
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .subheading .date {
-            font-style: italic;
-            font-size: 0.9rem;
-            color: #2d2d2d;
-        }
-
-        .subheading .institution {
-            font-style: italic;
-            font-size: 0.92rem;
-            color: #2d2d2d;
-        }
-
-        .sub-detail {
-            font-size: 0.95rem;
-            margin-top: 0.1rem;
-            margin-bottom: 0.3rem;
-            padding-left: 0.2rem;
-        }
-
-        .sub-detail i {
-            color: #2d2d2d;
-        }
-
-        .pub-authors {
-            font-weight: 400;
-        }
-
-        .pub-venue {
-            font-style: italic;
-        }
-
-        .highlight-red {
-            color: #b31b1b;
-            font-weight: 500;
-        }
-
-        .highlight-underline {
-            text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-
-        /* 引用/链接样式 */
-        .profile-link {
-            color: #1a1a1a;
-            text-decoration: none;
-            border-bottom: 1px dotted #777;
-        }
-
-        .profile-link:hover {
-            border-bottom: 1px solid #000;
-        }
-
-        .blue-link {
-            color: #0a2f6b;
-            text-decoration: none;
-            border-bottom: 1px dotted #0a2f6b;
-        }
-
-        .blue-link:hover {
-            border-bottom: 1px solid #0a2f6b;
-        }
-
-        /* 奖项/项目等 紧凑 */
-        .compact-item {
-            margin-bottom: 0.2rem;
-        }
-
-        .small-meta {
-            font-size: 0.9rem;
-            color: #2b2b2b;
-        }
-
-        /* 响应式 */
-        @media (max-width: 700px) {
-            .cv-container {
-                padding: 1.2rem;
-            }
-            .header-grid {
-                flex-direction: column;
-            }
-            .contact-block {
-                text-align: left;
-                margin-top: 0.5rem;
-            }
-            .subheading {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        /* 打印优化 */
-        @media print {
-            body { background: white; padding: 0.2in; }
-            .cv-container { box-shadow: none; padding: 0.1in; }
-            .section-title { border-bottom: 1px solid #000; }
-            .blue-link { border-bottom: 1px dotted #0a2f6b; }
-        }
-
-        hr {
-            border: 0;
-            border-top: 1px solid #ddd;
-            margin: 0.5rem 0;
-        }
-
-        /* 特殊：导师名字加粗 */
-        .supervisor-name {
-            font-weight: 600;
-        }
-        .justify-text {
-            text-align: justify;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jingjing Hu's academic homepage: multimodal learning, affective computing, video grounding, and brain-computer interfaces.">
+  <title>Jingjing Hu | Academic Homepage</title>
+  <style>
+    :root{--p950:#241238;--p900:#32154f;--p800:#4b1f73;--p700:#6f2da8;--p100:#eee5f5;--p50:#f8f4fb;--ink:#211b25;--muted:#685f6d;--line:#ded5e5;--link:#67249a}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}body{margin:0;background:#f2eef5;color:var(--ink);font:15px/1.5 Arial,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline;text-underline-offset:3px}
+    nav{position:fixed;inset:0 0 auto;z-index:100;background:linear-gradient(90deg,var(--p950),var(--p800));box-shadow:0 3px 14px #24123844}.nav-inner{width:min(1140px,calc(100% - 28px));min-height:58px;margin:auto;display:flex;align-items:center;gap:24px;padding:0 22px}.nav-name{color:#fff;font:700 19px Georgia,serif;white-space:nowrap}.nav-name:hover{text-decoration:none}.nav-links{flex:1;display:flex;justify-content:center;gap:clamp(16px,3vw,38px)}.nav-links a{color:#f8f4fb;white-space:nowrap}.lang-btn{border:1px solid #ffffffaa;border-radius:999px;padding:6px 12px;background:#ffffff1c;color:#fff;cursor:pointer;font-weight:700}.lang-btn:hover{background:#fff;color:var(--p800)}
+    main{width:min(1140px,calc(100% - 28px));margin:78px auto 30px;padding:30px 34px 42px;background:#fff;border-top:5px solid var(--p700);box-shadow:0 3px 18px #2d16402e}.hero{display:grid;grid-template-columns:270px 1fr;gap:38px;align-items:center;padding-bottom:24px}.photo{width:270px;height:205px;object-fit:cover;object-position:50% 24%;border:7px solid var(--p50);box-shadow:0 0 0 1px #d9cce4}.eyebrow{margin:0 0 5px;color:var(--p700);font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}h1{margin:0;color:var(--p950);font:700 clamp(34px,4vw,49px)/1.08 Georgia,serif}h1 small{font-family:"Songti SC",SimSun,serif;font-size:.62em}.role{margin:11px 0 4px;font-size:18px;font-weight:700}.school{margin:0;color:var(--muted)}.profiles{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}.profiles a{padding:6px 11px;border:1px solid #cdb7dc;border-radius:3px;background:var(--p50);font-size:13px;font-weight:700}
+    .intro{display:grid;grid-template-columns:1.45fr .85fr;gap:32px;padding-top:18px;border-top:1px solid var(--line)}.intro h2{margin:0 0 8px;color:var(--p950);font:700 22px Georgia,serif}.intro p{margin:0;text-align:justify}.interests{padding:15px 18px;border-left:5px solid var(--p700);background:var(--p50)}.interests h2{font-size:18px}.interests ul{margin:6px 0 0;padding-left:18px}
+    .section-title{margin:22px 0 9px;padding:10px 14px 8px;border-left:7px solid var(--p950);background:linear-gradient(90deg,var(--p800),var(--p700) 55%,#b68bd0);color:#fff;font:700 23px Georgia,serif}.sub-title{margin:17px 0 8px;color:var(--p900);font:700 18px Georgia,serif}.note{color:var(--muted);font-size:12px}.news{max-height:205px;overflow:auto}.news p{display:grid;grid-template-columns:80px 1fr;gap:10px;margin:7px 2px}.news time{color:var(--p800);font-weight:800}.timeline{display:flex;justify-content:space-between;padding:10px 3px;border-bottom:1px solid #eee8f2}.timeline h3,.timeline p{margin:0}.timeline h3{font:700 16px Georgia,serif}.timeline p{color:var(--muted);font-size:13px}.timeline time{color:var(--p800);font-weight:700}
+    .cards,.experience,.services{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card,.experience article,.services article{padding:14px 16px;border:1px solid var(--line);background:#fdfbfe}.card h3,.experience h3,.services h3{margin:0;color:var(--p900);font:700 15px Georgia,serif}.card p,.experience p{margin:5px 0;color:#514a55;font-size:13px}.project-list{margin:0;padding-left:24px}.project-list li{margin:9px 0;padding-left:4px}.project-list strong{color:var(--p800)}.submission-list{margin:7px 0 0;padding-left:22px}.submission-list li{margin:7px 0}.submission-list em{color:var(--p700);font-weight:700}
+    .publication{display:grid;grid-template-columns:195px 1fr;gap:22px;align-items:center;padding:13px 3px;border-bottom:1px solid #ebe5ef}.pub-img{width:195px;height:115px;object-fit:contain;border:1px solid #e5dbea;background:#faf7fc}.pub-placeholder{width:195px;height:115px;display:grid;place-items:center;border:1px solid #e5dbea;background:#faf7fc;color:#c1a8d1;font:700 36px Georgia,serif}.pub h3{margin:0 0 4px;color:#431865;font:700 16px/1.34 Georgia,serif}.pub p{margin:2px 0;font-size:13.4px}.meta{color:var(--p700);font-weight:700}.links{display:inline-flex;gap:7px;margin-left:8px}.links a{font-weight:800}.links .placeholder{color:#9a8d9f;cursor:default}.compact-list{counter-reset:pub}.compact{counter-increment:pub;position:relative;padding:11px 4px 11px 42px;border-bottom:1px solid #eee8f2}.compact:before{content:"[" counter(pub) "]";position:absolute;left:4px;top:12px;color:var(--p700);font-weight:800}.compact h3{margin:0;color:#431865;font:700 15px Georgia,serif}.compact p{margin:2px 0;font-size:13px}.review,.patent{margin-top:10px;padding:11px 14px;background:var(--p50);border-left:4px solid #a16bc1}.patent{border:1px solid #dacde2}.experience article>span{color:var(--p700);font-size:12px;font-weight:800}
+    .award-list{margin:0;padding:2px 0 2px 28px}.award-list li{padding:7px 8px;border-bottom:1px solid #e8e0ed}.award-list li:nth-child(even){background:#fbf8fc}.award-year{color:var(--p700);font-weight:800}.award-organizer{color:var(--muted)}.services ul{margin:8px 0;padding-left:19px}.services p{font-size:13px}.chips{display:flex;flex-wrap:wrap;gap:7px}.chips span{padding:6px 9px;border:1px solid #d5c4df;background:var(--p50);color:#4a2b5c;font-size:12px}footer{margin-top:30px;padding-top:13px;border-top:1px solid var(--line);text-align:center;color:#827787;font-size:11px}
+    @media(max-width:780px){.nav-inner{width:100%;gap:12px;padding:0 13px}.nav-name{display:none}.nav-links{justify-content:flex-start;gap:22px;overflow:auto}main{width:100%;margin:58px 0 0;padding:20px 18px}.hero{grid-template-columns:150px 1fr;gap:18px}.photo{width:150px;height:190px}h1{font-size:30px}.intro,.cards,.experience,.services{grid-template-columns:1fr}.publication{grid-template-columns:120px 1fr;gap:12px;align-items:start}.pub-img,.pub-placeholder{width:120px;height:88px}}
+    @media(max-width:520px){.hero,.publication{grid-template-columns:1fr}.photo{width:180px;height:225px}.pub-img,.pub-placeholder{width:min(260px,100%);height:125px}.news p{grid-template-columns:68px 1fr}.timeline{flex-direction:column}}
+  </style>
 </head>
 <body>
-<div class="cv-container">
-
-    <!-- ========== 头部：姓名 + 地址 + 联系方式 ========== -->
-    <div class="header-grid">
-        <div class="name-title">
-            <h1>Jingjing Hu</h1>
-            <div class="address-block">
-                <i class="fas fa-map-pin" style="width:1.2rem;"></i> 420 Feicui Rd, Hefei City, Anhui Province, Hefei University of Technology, China
-            </div>
-        </div>
-        <div class="contact-block">
-            <div><i class="fas fa-envelope"></i> <a href="mailto:xianhjj623@gmail.com">xianhjj623@gmail.com</a></div>
-            <div style="margin-top:0.2rem;"><i class="fas fa-map-pin"></i> PostalCode: 230601</div>
-        </div>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-name" href="#home">Jingjing Hu</a>
+    <div class="nav-links">
+      <a href="#about" data-en="Bio" data-zh="简介">Bio</a>
+      <a href="#news" data-en="News" data-zh="动态">News</a>
+      <a href="#education" data-en="Education" data-zh="教育">Education</a>
+      <a href="#publications" data-en="Publications" data-zh="论文">Publications</a>
+      <a href="#experience" data-en="Experience" data-zh="经历">Experience</a>
+      <a href="#awards" data-en="Awards/Services" data-zh="荣誉/服务">Awards/Services</a>
     </div>
+    <button class="lang-btn" id="languageButton">中文</button>
+  </div>
+</nav>
 
-    <!-- ========== 研究兴趣 ========== -->
-    <div class="section-title">Research Interests</div>
-    <ul class="cv-list" style="margin-bottom: 0.8rem;">
-        <li style="text-align: justify; padding-left:0; list-style:none;">
-            Multimodal affective computing, computer vision, and machine learning, with a focus on cross-modal alignment, video grounding, bodily behavior understanding, and brain signal decoding for brain-computer interfaces. Author of 16 peer-reviewed papers (6 first-author) at venues including <i>IEEE TPAMI</i>, <i>ICML</i>, <i>ACM MM</i>, and <i>AAAI</i>.
-        </li>
-    </ul>
-
-    <!-- ========== 教育背景 ========== -->
-    <div class="section-title">Education Background</div>
-    <ul class="cv-list" style="list-style:none; padding-left:0;">
-        <li style="margin-bottom:0.6rem; padding-left:0;">
-            <div class="subheading">
-                <span class="title">Northeastern University</span>
-                <span class="date">2018 - 2022</span>
-            </div>
-            <div class="sub-detail">the B.Sc. in Internet of Things Engineering, China</div>
-        </li>
-        <li style="margin-bottom:0.2rem; padding-left:0;">
-            <div class="subheading">
-                <span class="title">Hefei University of Technology</span>
-                <span class="date">2022 – Present</span>
-            </div>
-            <div class="sub-detail">the Ph.D. candidate in Computer Science and Technology, China</div>
-        </li>
-    </ul>
-
-    <!-- ========== 导师 ========== -->
-    <div class="section-title">Supervisors</div>
-    <ul class="cv-list" style="list-style:none; padding-left:0;">
-        <li style="margin-bottom:0.6rem; padding-left:0; text-align:justify;">
-            <span class="supervisor-name">Prof. Meng Wang</span> (<a class="blue-link" href="https://scholar.google.com/citations?user=rHagaaIAAAAJ" target="_blank">Google Scholar</a>) <br>
-            National Science Fund for Distinguished Young Scholars; IEEE Fellow, IAPR Fellow; Recipient of the China Youth Science and Technology Award and the Xplorer Prize.
-        </li>
-        <li style="margin-bottom:0.2rem; padding-left:0; text-align:justify;">
-            <span class="supervisor-name">Prof. Dan Guo</span> (<a class="blue-link" href="https://orcid.org/0000-0003-2594-254X" target="_blank">ORCID</a>) <br>
-            Outstanding Youth Scholar of Anhui Province; Area Chair/Senior Program Committee for CVPR, NeurIPS, AAAI, IJCAI; Associate Editor for IEEE TMM, ACM TOMM.
-        </li>
-    </ul>
-
-    <!-- ========== 荣誉与奖项 ========== -->
-    <div class="section-title">Honors &amp; Awards</div>
-    <ul class="cv-list" style="list-style:none; padding-left:0;">
-        <li style="padding-left:0; margin-bottom:0.3rem;"><strong>National Scholarship for Doctoral Students</strong>, Ministry of Education of P.R. China, 2025-09.</li>
-        <li style="padding-left:0; margin-bottom:0.3rem;"><strong>Young Elite Scientists Sponsorship Program</strong> (Doctoral Program) by China Association for Science and Technology (CAST), 2025.</li>
-        <li style="padding-left:0; margin-bottom:0.3rem;"><strong>Champion</strong> of Bodily Behaviour Recognition Task, ACM Multimedia (ACM MM) Grand Challenge, 2024-11.</li>
-    </ul>
-
-    <!-- ========== 项目 ========== -->
-    <div class="section-title">Projects</div>
-    <ul class="cv-list" style="list-style:none; padding-left:0;">
-        <li style="padding-left:0; margin-bottom:0.8rem; text-align:justify;">
-            <strong>Anhui Provincial Quality Engineering Project for Postgraduates</strong> (Principal Investigator), Department of Education of Anhui Province, 2024-09 – Present, No. 2024cxcysj002.<br>
-            Led the development of the embodied emotion computing platform. Integrated neuroscience prior theories to construct an efficient interpreter from EEG signals to emotional responses, facilitating the practical application of BCIs.
-        </li>
-        <li style="padding-left:0; margin-bottom:0.2rem; text-align:justify;">
-            <strong>National Silver Award</strong>, China International College Students' Innovation Competition, 2024-10.<br>
-            Led the development of a millisecond-level multimodal public opinion monitoring system. By integrating visual sentiment analysis and cross-modal fusion, the system achieves a daily processing capacity of over 30,000 data items with an early warning accuracy exceeding 95%. Successfully deployed in various government and enterprise applications.
-        </li>
-    </ul>
-
-    <!-- ========== 学术服务 ========== -->
-    <div class="section-title">Academic Services</div>
-    <ul class="cv-list" style="list-style:none; padding-left:0;">
-        <li style="padding-left:0; margin-bottom:0.3rem;"><strong>Data Chair</strong> of ACM Multimedia (ACM MM) Grand Challenge, 2024 &amp; 2025. Served for over 40 top global research institutions.</li>
-        <li style="padding-left:0; margin-bottom:0.2rem;"><strong>Invited Reviewer</strong> for top-tier conferences and journals including CVPR, ICML, AAAI, ACM MM, EAAI, Information Fusion, ACM TOMM, IVC, etc.</li>
-    </ul>
-
-    <!-- ========== 出版物 ========== -->
-    <div class="section-title">Publications</div>
-    
-    <!-- 第一/通讯作者 -->
-    <div style="margin-top:0.3rem; font-weight:600; font-size:1rem;">First-Author and Corresponding-Author Peer-Reviewed Papers</div>
-    <div style="margin-bottom:0.5rem; font-size:0.9rem;">
-        <a class="blue-link" href="https://scholar.google.com/citations?hl=zh-CN&user=VzkcgNoAAAAJ" target="_blank">Google Scholar profile</a>
+<main id="home">
+  <section class="hero">
+    <img class="photo" src="figs/self.jpg" alt="Jingjing Hu">
+    <div>
+      <p class="eyebrow" data-en="Academic Homepage" data-zh="个人学术主页">Academic Homepage</p>
+      <h1>Jingjing Hu <small>胡晶晶</small></h1>
+      <p class="role" data-en="Ph.D. Candidate in Computer Science and Technology" data-zh="计算机科学与技术专业博士研究生">Ph.D. Candidate in Computer Science and Technology</p>
+      <p class="school" data-en="Hefei University of Technology · Hefei, China" data-zh="合肥工业大学 · 中国合肥">Hefei University of Technology · Hefei, China</p>
+      <div class="profiles">
+        <a href="mailto:xianhjj623@gmail.com">Email</a>
+        <a href="https://scholar.google.com/citations?hl=en&user=VzkcgNoAAAAJ" target="_blank">Google Scholar</a>
+        <a href="https://github.com/xian-sh" target="_blank">GitHub</a>
+        <a href="https://orcid.org/0009-0003-6944-0848" target="_blank">ORCID</a>
+      </div>
     </div>
+  </section>
 
-    <ol class="cv-list-numbered" style="margin-bottom:1.2rem;">
-        <li><strong><u>Jingjing Hu</u></strong>, Dan Guo*, Kun Li, Zhan Si, Xun Yang, Xiaojun Chang, and Meng Wang*. "Unified Static and Dynamic Network: Efficient Temporal Filtering for Video Grounding", <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i> (<span class="highlight-red">IEEE TPAMI, IF 20.8</span>), vol. 34, 2025.</li>
-        <li><strong><u>Jingjing Hu</u></strong>, Dan Guo*, Haofan Cheng, Ying Zeng, Zhan Si, Jinxing Zhou, and Meng Wang*. "See the Emotion: A Facial Emoji Proxy Modeling for EEG Emotion Recognition", <i>Proceedings of the 43rd International Conference on Machine Learning</i> (<span class="highlight-red">ICML 2026, CCF-A</span>), accepted, 2026.</li>
-        <li><strong><u>Jingjing Hu</u></strong>, Dan Guo*, Kun Li, Zhan Si, Xun Yang, and Meng Wang*. "Maskable Retentive Network for Video Moment Retrieval", <i>Proceedings of the 32nd ACM International Conference on Multimedia</i> (<span class="highlight-red">ACM MM 2024, CCF-A</span>), pp. 1476-1485, 2024.</li>
-        <li><strong><u>Jingjing Hu</u></strong>, Dan Guo*, Zhan Si, Deguang Liu, Yunfeng Diao, Jing Zhang, Jinxing Zhou, and Meng Wang*. "MOL-Mamba: Enhancing Molecular Representation with Structural &amp; Electronic Insights", <i>Proceedings of the 39th AAAI Conference on Artificial Intelligence</i> (<span class="highlight-red">AAAI 2025, CCF-A</span>), vol. 39, no. 1, pp. 317-325, 2025.</li>
-        <li><strong><u>Jingjing Hu</u></strong>, Dan Guo*, Meng Wang, Jiaxi Li, and Fei Liu. "Reproducibility Companion Paper: Maskable Retentive Network for Video Moment Retrieval", <i>Proceedings of the 33rd ACM International Conference on Multimedia</i> (<span class="highlight-red">ACM MM 2025, CCF-A</span>), pp. 13669-13672, 2025.</li>
-        <li><strong><u>Jingjing Hu</u></strong>, Shuaiqi Fu, Zhan Si, and Junran Chen. "Spatial-Energy-Aware Dynamic Filtering with Sparse Graph Convolutions for EEG Emotion Recognition", <i>Proceedings of the 47th Annual Meeting of the Cognitive Science Society</i> (<span class="highlight-red">CogSci 2025, CCF-B</span>), vol. 47, 2025.</li>
-        <li>Siying Tao, <strong><u>Jingjing Hu*</u></strong>, Jinyang Huang, Fengqi Cui, Xueliang Liu, and Dan Guo. "Band-Gated Identity-Disentangled Training for Cross-Subject Auditory Attention Decoding", <i>Proceedings of the 48th Annual Meeting of the Cognitive Science Society</i> (<span class="highlight-red">CogSci 2026, CCF-B</span>), 2026.</li>
-        <li>Guanyu Chang†, Zhan Si†, <strong><u>Jingjing Hu*</u></strong>, Zhangling Duan, and Dan Guo*. "GraphMD: A Two-module Diffusion Framework for Smooth and Consistent Molecular Dynamics", <i>Proceedings of the 2026 IEEE International Conference on Acoustics, Speech and Signal Processing</i> (<span class="highlight-red">ICASSP 2026, CCF-B</span>), 2026.</li>
-        <li><strong><u>Jingjing Hu</u></strong>, Dan Guo*, Dongrui Wu, Zhan Si, Shuaiqi Fu, and Meng Wang. "Frequency-aware Spatio-Temporal Hypergraph for EEG-based Emotion Recognition", <i>IEEE Transactions on Affective Computing</i> (<span class="highlight-red">IEEE TAFFC, SCI Q1</span>), <u>minor revision</u>.</li>
-    </ol>
-
-    <!-- 合作论文 -->
-    <div style="margin-top:0.8rem; font-weight:600; font-size:1rem;">Co-authored Peer-Reviewed Papers</div>
-    <ol class="cv-list-numbered" style="margin-bottom:1.2rem;">
-        <li>Jianqiu Zhou, Dan Guo*, Rui Guo, Yupeng Mao, <strong><u>Jingjing Hu</u></strong>, Yilin Zhong, Xiaojun Chang, and Meng Wang. "Towards Open-Vocabulary Audio-Visual Event Localization", <i>Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition</i> (<span class="highlight-red">CVPR 2025, CCF-A</span>), 2025.</li>
-        <li>Cailing Han*, Zhangbin Li*, Jinxing Zhou†, Wei Qian, <strong><u>Jingjing Hu</u></strong>, Yanghao Zhou, Zhangling Duan, and Dan Guo. "Face-Guided Sentiment Boundary Enhancement for Weakly-Supervised Temporal Sentiment Localization", <i>Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition</i> (<span class="highlight-red">CVPR 2026, CCF-A</span>), 2026.</li>
-        <li>Dan Guo*, Kun Li, Xiu Li, Haoyu Chen, <strong><u>Jingjing Hu</u></strong>, Guoying Zhao, Yang Yang, and Meng Wang. "MAC 2024: Micro-Action Analysis Grand Challenge", <i>Proceedings of the 32nd ACM International Conference on Multimedia</i> (<span class="highlight-red">ACM MM 2024, CCF-A</span>), pp. 11304-11305, 2024.</li>
-        <li>Zhan Si, Deguang Liu, Wan Nie, <strong><u>Jingjing Hu</u></strong>, Chen Wang, Tingting Jiang, Haizhu Yu*, and Yao Fu*. "Data-Based Prediction of Redox Potentials via Introducing Chemical Features into the Transformer Architecture", <i>Journal of Chemical Information and Modeling</i> (<span class="highlight-red">JCIM, SCI Q1</span>), vol. 64, no. 22, pp. 8453-8463, 2024.</li>
-        <li>Kun Li, Dan Guo*, Xiu Li, Haoyu Chen, Peng Wang, Fei Wang, <strong><u>Jingjing Hu</u></strong>, Guoying Zhao, and Meng Wang. "MAC 2025: The 2nd Micro-Action Analysis Grand Challenge", <i>Proceedings of the 33rd ACM International Conference on Multimedia</i> (<span class="highlight-red">ACM MM 2025, CCF-A</span>), pp. 14216-14221, 2025.</li>
-        <li>Tingting Jiang, Qiqi Zhang, Zhan Si, <strong><u>Jingjing Hu</u></strong>, Ying Lv, Tingting Wang, Haizhu Yu*, and Manzhou Zhu. "Machine Learning on Frontier Orbital Energy of Atomically Precise Gold Nanoclusters", <i>The Journal of Chemical Physics</i> (<span class="highlight-red">JCP, SCI Q1</span>), vol. 163, no. 16, 2025.</li>
-    </ol>
-
-    <!-- 专利 -->
-    <div style="margin-top:0.8rem; font-weight:600; font-size:1rem;">Patents</div>
-    <ol class="cv-list-numbered" style="margin-bottom:0.2rem;">
-        <li><strong><u>Jingjing Hu</u></strong>, Jing Zhang, Yao Zhao, and Dan Guo. "A Human Activity Detection System and Method Based on Time-Frequency Dual-Path Sensor Fusion" (<span class="highlight-red">Patent, Substantive Examination</span>).</li>
-        <li>Dan Guo, <strong><u>Jingjing Hu</u></strong>, and Meng Wang. "An EEG Emotion Recognition Method and System Based on Frequency-Aware Spatio-Temporal Hypergraph" (<span class="highlight-red">Patent, Submitted</span>).</li>
-        <li>Dan Guo, <strong><u>Jingjing Hu</u></strong>, and Meng Wang. "An Identity-Independent Facial Expression Generation Method and System Based on EEG Signals" (<span class="highlight-red">Patent, Submitted</span>).</li>
-        <li>Dan Guo, Siying Tao, <strong><u>Jingjing Hu</u></strong>, Jinyang Huang, and Meng Wang. "A Cross-Subject Auditory Attention State Decoding Method and System Based on EEG" (<span class="highlight-red">Patent, Submitted</span>).</li>
-        <li>Dan Guo, Haofan Cheng, <strong><u>Jingjing Hu</u></strong>, and Meng Wang. "An EEG Personality Prediction Method and System Based on Time-Frequency Dual-Stream Convolutional Attention Network" (<span class="highlight-red">Patent, Submitted</span>).</li>
-    </ol>
-
-    <!-- 页脚留白 -->
-    <div style="margin-top:1.5rem; font-size:0.75rem; color:#777; border-top:1px solid #eee; padding-top:0.5rem; text-align:center;">
-        <!-- 可选 footer -->
+  <section class="intro" id="about">
+    <div>
+      <h2 data-en="Brief Bio" data-zh="个人简介">Brief Bio</h2>
+      <p data-en="I am a Ph.D. candidate at Hefei University of Technology, advised by Prof. Meng Wang and Prof. Dan Guo. My research spans multimodal affective computing, computer vision, and machine learning, with a focus on cross-modal alignment, video grounding, bodily behavior understanding, and brain-signal decoding for brain-computer interfaces. I have published 15 peer-reviewed papers, including six as first author, at venues such as IEEE TPAMI, ICML, ACM MM, AAAI, CVPR, CogSci, and ICASSP." data-zh="现为合肥工业大学计算机科学与技术专业博士研究生，导师为汪萌教授和郭丹教授。主要研究方向包括多模态情感计算、计算机视觉与机器学习，重点关注跨模态对齐、视频时序定位、身体行为理解，以及面向脑机接口的脑电信号表征与解码。目前已发表同行评审论文15篇，其中第一作者论文6篇，成果发表于IEEE TPAMI、ICML、ACM MM、AAAI、CVPR、CogSci和ICASSP等期刊与会议。">I am a Ph.D. candidate at Hefei University of Technology, advised by Prof. Meng Wang and Prof. Dan Guo. My research spans multimodal affective computing, computer vision, and machine learning, with a focus on cross-modal alignment, video grounding, bodily behavior understanding, and brain-signal decoding for brain-computer interfaces. I have published 15 peer-reviewed papers, including six as first author, at venues such as IEEE TPAMI, ICML, ACM MM, AAAI, CVPR, CogSci, and ICASSP.</p>
     </div>
+    <aside class="interests">
+      <h2 data-en="Research Interests" data-zh="研究方向">Research Interests</h2>
+      <ul class="lang-list" data-en="Multimodal learning & cross-modal alignment|EEG representation learning & brain-computer interfaces|Video grounding & bodily behavior understanding|AI for molecules and materials" data-zh="多模态学习与跨模态对齐|脑电表征学习与脑机接口|视频时序定位与身体行为理解|人工智能驱动的分子与材料研究"></ul>
+    </aside>
+  </section>
 
-</div>
+  <section id="news">
+    <h2 class="section-title" data-en="News" data-zh="最新动态">News</h2>
+    <div class="news">
+      <p><time>2026.08</time><span data-en="The ICML 2026 work See the Emotion and its codebase are publicly available." data-zh="ICML 2026论文《See the Emotion》及代码已公开。">The ICML 2026 work See the Emotion and its codebase are publicly available.</span></p>
+      <p><time>2026.05</time><span data-en="See the Emotion was accepted by ICML 2026; one co-authored paper was accepted by CVPR 2026." data-zh="《See the Emotion》被ICML 2026接收，一篇合作论文被CVPR 2026接收。">See the Emotion was accepted by ICML 2026; one co-authored paper was accepted by CVPR 2026.</span></p>
+      <p><time>2026.04</time><span data-en="Two papers were accepted by CogSci 2026." data-zh="两篇论文被CogSci 2026接收。">Two papers were accepted by CogSci 2026.</span></p>
+      <p><time>2026.01</time><span data-en="GraphMD was accepted by ICASSP 2026." data-zh="GraphMD被ICASSP 2026接收。">GraphMD was accepted by ICASSP 2026.</span></p>
+      <p><time>2025.09</time><span data-en="Received the National Scholarship for Doctoral Students." data-zh="获得博士研究生国家奖学金。">Received the National Scholarship for Doctoral Students.</span></p>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2 class="section-title" data-en="Education" data-zh="教育背景">Education</h2>
+    <div class="timeline"><div><h3 data-en="Hefei University of Technology" data-zh="合肥工业大学">Hefei University of Technology</h3><p data-en="Ph.D. Candidate in Computer Science and Technology" data-zh="计算机科学与技术，博士研究生">Ph.D. Candidate in Computer Science and Technology</p></div><time>2022–2026</time></div>
+    <div class="timeline"><div><h3 data-en="Northeastern University" data-zh="东北大学">Northeastern University</h3><p data-en="B.Eng. in Internet of Things Engineering" data-zh="物联网工程，工学学士">B.Eng. in Internet of Things Engineering</p></div><time>2018–2022</time></div>
+    <h3 class="sub-title" data-en="Supervisors" data-zh="导师">Supervisors</h3>
+    <div class="cards">
+      <article class="card"><h3 data-en="Prof. Meng Wang" data-zh="汪萌 教授">Prof. Meng Wang</h3><p data-en="IEEE Fellow, IAPR Fellow, and recipient of the National Science Fund for Distinguished Young Scholars." data-zh="IEEE Fellow、IAPR Fellow，国家杰出青年科学基金获得者。">IEEE Fellow, IAPR Fellow, and recipient of the National Science Fund for Distinguished Young Scholars.</p><a href="https://scholar.google.com/citations?user=rHagaaIAAAAJ" target="_blank">Google Scholar →</a></article>
+      <article class="card"><h3 data-en="Prof. Dan Guo" data-zh="郭丹 教授">Prof. Dan Guo</h3><p data-en="Researcher in multimedia understanding, affective computing, and multimodal intelligence." data-zh="主要研究多媒体理解、情感计算与多模态智能。">Researcher in multimedia understanding, affective computing, and multimodal intelligence.</p><a href="https://orcid.org/0000-0003-2594-254X" target="_blank">ORCID →</a></article>
+    </div>
+  </section>
+
+  <section id="publications">
+    <h2 class="section-title" data-en="Publications" data-zh="论文成果">Publications</h2>
+    <p class="note" data-en="* Corresponding author. Gray links are placeholders that can be replaced later." data-zh="* 表示通讯作者；灰色链接为占位符，后续可直接替换。">* Corresponding author. Gray links are placeholders that can be replaced later.</p>
+    <h3 class="sub-title" data-en="First-Author & Corresponding-Author Work" data-zh="第一作者及通讯作者论文">First-Author & Corresponding-Author Work</h3>
+    <div id="primaryPublications"></div>
+    <div class="review"><strong data-en="Manuscripts Under Review" data-zh="在审论文">Manuscripts Under Review</strong><ol class="submission-list lang-list" data-en="J. Hu, D. Guo, D. Wu, Z. Si, S. Fu, and M. Wang. Frequency-aware Spatio-Temporal Hypergraph for EEG-based Emotion Recognition. IEEE TAFFC, under review.|J. Hu, S. Wei, H. Cheng, S. Fu, Z. Si, D. Liu, and D. Guo*. Visible Minds: A Human-First AI System for Privacy-Aware Emotion Support via De-identified Facial Proxies. Submitted to AAAI 2027." data-zh="胡晶晶、郭丹、吴东睿、司展、付帅旗、汪萌：Frequency-aware Spatio-Temporal Hypergraph for EEG-based Emotion Recognition，IEEE TAFFC在审。|胡晶晶、魏士熠、程浩凡、付帅旗、司展、刘德广、郭丹*：Visible Minds: A Human-First AI System for Privacy-Aware Emotion Support via De-identified Facial Proxies，投稿AAAI 2027。"></ol></div>
+    <div class="patent"><strong data-en="Patents" data-zh="发明专利">Patents</strong><ol class="submission-list lang-list" data-en="J. Hu, J. Zhang, Y. Zhao, and D. Guo. A Human Activity Detection System and Method Based on Time-Frequency Dual-Channel Sensor Fusion. Under substantive examination.|D. Guo, J. Hu, and M. Wang. EEG Emotion Recognition Method and System Based on a Frequency-aware Spatio-Temporal Hypergraph. Submitted.|D. Guo, J. Hu, and M. Wang. Identity-Independent Facial Expression Generation Method and System Based on EEG Signals. Submitted.|D. Guo, S. Tao, J. Hu, J. Huang, and M. Wang. Cross-Subject Auditory Attention State Decoding Method and System Based on EEG. Submitted.|D. Guo, H. Cheng, J. Hu, and M. Wang. EEG Personality Prediction Method and System Based on a Time-Frequency Dual-Stream Convolutional Attention Network. Submitted." data-zh="胡晶晶、张静、赵耀、郭丹：一种基于时频双路传感器融合的人体活动检测系统及方法，实质审查。|郭丹、胡晶晶、汪萌：一种基于频率-时空超图的脑电信号情绪识别方法及系统，已提交。|郭丹、胡晶晶、汪萌：一种基于脑电信号的身份无关脸部表情生成方法及系统，已提交。|郭丹、陶斯颖、胡晶晶、黄锦阳、汪萌：一种基于脑电的跨被试听觉注意力状态解码方法及系统，已提交。|郭丹、程浩凡、胡晶晶、汪萌：一种基于时频双流卷积注意力网络的EEG人格预测方法及系统，已提交。"></ol></div>
+    <h3 class="sub-title" data-en="Co-authored Work" data-zh="合作论文">Co-authored Work</h3>
+    <div class="compact-list" id="coauthorPublications"></div>
+  </section>
+
+  <section id="experience">
+    <h2 class="section-title" data-en="Projects & Professional Experience" data-zh="项目与职业经历">Projects & Professional Experience</h2>
+    <h3 class="sub-title" data-en="Research Projects" data-zh="科研项目">Research Projects</h3>
+    <ol class="project-list lang-list" data-en="Young Elite Scientists Sponsorship Program for Doctoral Students, China Association for Science and Technology (Principal Investigator), 2025–Present|Embodied Emotion Computing Platform Based on Multimodal Affective Computing (No. 2024cxcysj002), Anhui Provincial Graduate Education Quality Project (Principal Investigator), 2024–Present|Systems Engineering Theory and Applications for Intelligent Interconnected Systems (No. 72188101), NSFC Excellent Research Group / former Basic Science Center Project (Participant), 2022–Present|Abductive Reasoning for Video Question Answering (No. 62272144), NSFC General Program (Participant), 2023–Present|Accurate Description of Complex Videos (No. 62020106007), NSFC International Cooperation and Exchange Program (Participant), 2022–2025|Key Technologies for Multimodal Intelligent Behavior Cognition (No. JZ2024AKYQ0588), Anhui Distinguished Young Scholars Project (Participant), 2024–Present|Research on Multimodal Forward XXX Models (No. JD2023XATQ0022), CMC Science and Technology Innovation Special Zone Project (Participant), 2023–2025" data-zh="中国科协青年科技人才培育工程博士生专项计划（个人主持），2025年至今|心领神会——基于多模态情感计算的具身智能平台（编号：2024cxcysj002），安徽省研究生教育质量工程项目（主持），2024年至今|智能互联系统的系统工程理论及应用（编号：72188101），卓越研究群体项目（原基础科学中心项目）（参与），2022年至今|视频问答中的溯因推理研究（编号：62272144），国家自然科学基金面上项目（参与），2023年至今|复杂视频的精准描述关键技术研究（编号：62020106007），国家自然科学基金国际（地区）合作与交流项目（参与），2022–2025|多模态智能行为认知关键技术研究（编号：JZ2024AKYQ0588），安徽省杰青项目（参与），2024年至今|多模态前向XXX模型研究（编号：JD2023XATQ0022），中央军委科技创新特区项目（参与），2023–2025"></ol>
+    <h3 class="sub-title" data-en="Professional Experience" data-zh="职业与社会经历">Professional Experience</h3>
+    <div class="experience">
+      <article><span>2024–Present</span><h3 data-en="Co-Founder, Ganruiyun (Jiangxi) International Holdings Co., Ltd." data-zh="赣瑞云（江西）国际控股有限公司，联合创始人">Co-Founder, Ganruiyun (Jiangxi) International Holdings Co., Ltd.</h3><p data-en="Company strategy, technology projects, and university-industry collaboration." data-zh="参与公司战略规划、技术项目推进与产学研合作。">Company strategy, technology projects, and university-industry collaboration.</p></article>
+      <article><span>2024</span><h3 data-en="Shanghai Huachuang Entrepreneurial Mentor" data-zh="上海华创创业导师">Shanghai Huachuang Entrepreneurial Mentor</h3><p data-en="Mentoring student teams on technology translation and venture development." data-zh="为学生创新创业项目提供技术与项目发展指导。">Mentoring student teams on technology translation and venture development.</p></article>
+      <article><span>2026</span><h3 data-en="Part-time Mentor, Innovation & Entrepreneurship Education Practice" data-zh="潍坊理工学院创新创业教育实践兼职导师">Part-time Mentor, Innovation & Entrepreneurship Education Practice</h3><p data-en="Practice-based education in artificial intelligence and innovation." data-zh="开展人工智能与创新创业相关实践指导。">Practice-based education in artificial intelligence and innovation.</p></article>
+      <article><span>2024–Present</span><h3 data-en="Embodied Emotion Computing Platform" data-zh="具身情感计算平台">Embodied Emotion Computing Platform</h3><p data-en="Principal investigator of an Anhui provincial project on EEG emotion recognition and interpretable BCIs." data-zh="安徽省研究生教育质量工程项目主持人，推动脑电情绪识别与可解释脑机接口研究。">Principal investigator of an Anhui provincial project on EEG emotion recognition and interpretable BCIs.</p></article>
+    </div>
+  </section>
+
+  <section id="awards">
+    <h2 class="section-title" data-en="Honors & Awards" data-zh="荣誉与奖励">Honors & Awards</h2>
+    <ol class="award-list" id="awardRows"></ol>
+  </section>
+
+  <section id="service">
+    <h2 class="section-title" data-en="Academic & Professional Service" data-zh="学术与社会服务">Academic & Professional Service</h2>
+    <div class="services">
+      <article><h3 data-en="Service" data-zh="学术与社会服务">Service</h3><ul class="lang-list" data-en="Data Chair, ACM MM International Challenge, 2024 and 2025|Shanghai Huachuang Entrepreneurial Mentor, 2024|Part-time Mentor, Innovation and Entrepreneurship Education Practice, 2026" data-zh="ACM MM国际挑战赛数据主席，2024、2025|上海华创创业导师，2024|潍坊理工学院创新创业教育实践兼职导师，2026"></ul></article>
+      <article><h3 data-en="Reviewer Service" data-zh="审稿服务">Reviewer Service</h3><p><strong data-en="Journals: " data-zh="期刊：">Journals: </strong>IEEE TMM, ACM TOMM, IEEE TNNLS, IEEE TAFFC, EAAI, Information Fusion, IVC, Advanced Technology in Neuroscience, Neurocomputing.</p><p><strong data-en="Conferences: " data-zh="会议：">Conferences: </strong>ICML, NeurIPS, CVPR, AAAI, ACM MM, CogSci, ICME.</p></article>
+    </div>
+    <h3 class="sub-title" data-en="Academic Exchange" data-zh="学术交流">Academic Exchange</h3>
+    <div class="chips"><span>ICML 2026 · Seoul</span><span>CCIG 2026 · Guangzhou</span><span>CSIG ChinaMM 2026 · Taiyuan</span><span>CSIG Affective Intelligence 2024 · Nanjing</span><span>ISEC 2026 · Hefei</span><span>Innovative Chemistry in Green Energy and Carbon Neutrality 2026 · Hefei</span><span>CCS Annual Meeting 2026 · Chongqing</span><span>CCF Hefei 10th Anniversary 2022</span><span>CAST “Pilot Program” · Hangzhou 2026</span></div>
+  </section>
+  <footer>© 2026 Jingjing Hu · <a href="mailto:xianhjj623@gmail.com">xianhjj623@gmail.com</a></footer>
+</main>
+
+<script>
+const primary = [
+  ["figs/unisdnet.png","Unified Static and Dynamic Network: Efficient Temporal Filtering for Video Grounding","J. Hu, D. Guo, K. Li, Z. Si, X. Yang, X. Chang, and M. Wang","IEEE Transactions on Pattern Analysis and Machine Intelligence, 47(8): 6445–6462, 2025","CCF-A · CAS Tier 1 Top · IF 20.8","https://doi.org/10.1109/TPAMI.2025.3558854","https://github.com/xian-sh/UniSDNet"],
+  ["figs/eeg_sparse_graph.png","Spatial-Energy-Aware Dynamic Filtering with Sparse Graph Convolutions for EEG Emotion Recognition","J. Hu, S. Fu, Z. Si, and J. Chen","Proceedings of the Annual Meeting of the Cognitive Science Society, Vol. 47, 2025","CogSci 2025 · CCF-B","https://escholarship.org/uc/item/31r0t22m",""],
+  ["figs/seeemotion.png","See the Emotion: A Facial Emoji Proxy Modeling for EEG Emotion Recognition","J. Hu, D. Guo, H. Cheng, Y. Zeng, Z. Si, J. Zhou, and M. Wang","Proceedings of the Forty-third International Conference on Machine Learning, 2026","ICML 2026 · CCF-A","https://arxiv.org/abs/2607.02912","https://github.com/xian-sh/SeeEmotion"],
+  ["figs/mrnet.png","Maskable Retentive Network for Video Moment Retrieval","J. Hu, D. Guo*, K. Li, Z. Si, X. Yang*, and M. Wang*","Proceedings of the 32nd ACM International Conference on Multimedia, pp. 1476–1485, 2024","ACM MM 2024 · CCF-A","https://doi.org/10.1145/3664647.3680746","https://github.com/xian-sh/MRNet"],
+  ["figs/molmamba.png","MOL-Mamba: Enhancing Molecular Representation with Structural & Electronic Insights","J. Hu, D. Guo*, Z. Si, D. Liu, Y. Diao, J. Zhang, J. Zhou, and M. Wang*","Proceedings of the AAAI Conference on Artificial Intelligence, 39(1): 317–325, 2025","AAAI 2025 · CCF-A","https://ojs.aaai.org/index.php/AAAI/article/view/32009","https://github.com/xian-sh/MOL-Mamba"],
+  ["","Reproducibility Companion Paper: Maskable Retentive Network for Video Moment Retrieval","J. Hu, D. Guo, M. Wang, J. Li, and F. Liu","Proceedings of the 33rd ACM International Conference on Multimedia, pp. 13669–13672, 2025","ACM MM 2025 · CCF-A","https://doi.org/10.1145/3746027.3759200","https://github.com/xian-sh/MRNet"],
+  ["figs/auditory_attention.png","Band-Gated Identity-Disentangled Training for Cross-Subject Auditory Attention Decoding","S. Tao, J. Hu*, J. Huang, F. Cui, X. Liu, and D. Guo","Proceedings of the Annual Meeting of the Cognitive Science Society, 2026","CogSci 2026 · CCF-B · Corresponding author","https://escholarship.org/uc/item/11p0p6nz","https://github.com/siyingtao/BDGI_for_AAD"],
+  ["figs/graphmd.png","GraphMD: A Two-Module Diffusion Framework for Smooth and Consistent Molecular Dynamics","G. Chang, Z. Si, J. Hu*, Z. Duan, and D. Guo","Proceedings of IEEE ICASSP, Barcelona, Spain, pp. 5701–5705, 2026","ICASSP 2026 · CCF-B · Corresponding author","https://ieeexplore.ieee.org/document/11464466/",""]
+];
+const coauthors = [
+  ["Geometry-Based Atomic Representations for Reactive Combustion Chemistry","Z. Si, J. Hu, Q. Zhang, H. Ding, H. Yu, D. Liu, and Y. Fu","Precision Chemistry","SCI Q1","",""],
+  ["Towards Open-Vocabulary Audio-Visual Event Localization","J. Zhou, D. Guo, R. Guo, Y. Mao, J. Hu, Y. Zhong, X. Chang, and M. Wang","Proceedings of CVPR, pp. 8362–8371, 2025","CVPR 2025 · CCF-A","https://doi.org/10.1109/CVPR52734.2025.00783","https://github.com/jasongief/ov-avel"],
+  ["Face-Guided Sentiment Boundary Enhancement for Weakly-Supervised Temporal Sentiment Localization","C. Han, Z. Li, J. Zhou, W. Qian, J. Hu, Y. Zhou, Z. Duan, and D. Guo","Proceedings of CVPR, 2026","CVPR 2026 · CCF-A","",""],
+  ["MAC 2024: Micro-Action Analysis Grand Challenge","D. Guo, K. Li, X. Li, H. Chen, J. Hu, G. Zhao, Y. Yang, and M. Wang","Proceedings of ACM MM, pp. 11304–11305, 2024","ACM MM 2024 · CCF-A","",""],
+  ["MAC 2025: The 2nd Micro-Action Analysis Grand Challenge","K. Li, D. Guo, X. Li, H. Chen, P. Wang, F. Wang, J. Hu, G. Zhao, and M. Wang","Proceedings of ACM MM, pp. 14216–14221, 2025","ACM MM 2025 · CCF-A","",""],
+  ["Data-Based Prediction of Redox Potentials via Introducing Chemical Features into the Transformer Architecture","Z. Si, D. Liu, W. Nie, J. Hu, C. Wang, T. Jiang, H. Yu, and Y. Fu","Journal of Chemical Information and Modeling, 64(22): 8453–8463, 2024","CAS Tier 2 Top","","https://github.com/xian-sh/TransChem"],
+  ["Machine Learning on Frontier Orbital Energy of Atomically Precise Gold Nanoclusters","T. Jiang, Q. Zhang, Z. Si, J. Hu, Y. Lv, T. Wang, H. Yu, and M. Zhu","The Journal of Chemical Physics, 163(16), 2025","SCI Q1","","https://github.com/xian-sh/Gold-Nanoclusters-with-KAN-Model"]
+];
+const awards = [
+  ["Data Chair, ACM MM Micro-Action Analysis Grand Challenge","ACM MM微动作分析大挑战赛数据主席","ACM Multimedia","ACM多媒体国际会议","2024–2025"],
+  ["International Champion (Ranked 5th), ACM MM Multimodal Group Behavior Analysis Grand Challenge","ACM MM多模态群体行为分析大挑战赛国际冠军（排名第5）","ACM Multimedia","ACM多媒体国际会议","2024"],
+  ["International Champion (Ranked 6th), IJCAI RePSS Multimodal Heart Rate Measurement Track","IJCAI RePSS多模态心率测量赛道国际冠军（排名第6）","IJCAI RePSS Challenge","IJCAI RePSS挑战赛","2026"],
+  ["Young Elite Scientists Sponsorship Program for Doctoral Students","中国科协青年科技人才培育工程博士生专项","China Association for Science and Technology","中国科学技术协会","2025"],
+  ["Anhui Provincial Graduate Academic Rising Star","安徽省研究生学术新星","Department of Education of Anhui Province","安徽省教育厅","2026"],
+  ["National Scholarship for Doctoral Students","博士研究生国家奖学金","Ministry of Education, P.R. China","中华人民共和国教育部","2025"],
+  ["National Silver Award (Ranked 7th), China International College Students’ Innovation Competition","中国国际大学生创新大赛国家银奖（排名第7）","National Competition","全国赛事","2024"],
+  ["Provincial Silver Award (Ranked 1st), Anhui College Students’ Innovation Competition","安徽省大学生创新大赛产业命题赛道省级银奖（排名第1）","Anhui Provincial Competition","安徽省大学生创新大赛","2025"],
+  ["Provincial Silver Award (Ranked 1st), Anhui Internet+ Innovation and Entrepreneurship Competition","安徽省“互联网+”大学生创新创业大赛省级银奖（排名第1）","Anhui Provincial Competition","安徽省“互联网+”大学生创新创业大赛","2023"],
+  ["Top Ten Outstanding Students of the Year","十佳大学生年度人物","Hefei University of Technology","合肥工业大学","2026"],
+  ["Most Beautiful Researcher","最美科研人","Hefei University of Technology","合肥工业大学","2026"],
+  ["First-Class Academic Scholarship for Graduate Students","研究生学业一等学业奖学金","Hefei University of Technology","合肥工业大学","2022–2026"],
+  ["Tianyuan DIC Social Scholarship","天源迪科社会奖学金","Hefei University of Technology / Tianyuan DIC","合肥工业大学 / 天源迪科","2024"]
+];
+let lang="en";
+function link(label,url){return url?'<a href="'+url+'" target="_blank">['+label+']</a>':'<a href="#" class="placeholder" onclick="return false" title="Replace this placeholder URL">['+label+']</a>'}
+function renderPublications(){
+  document.getElementById("primaryPublications").innerHTML=primary.map((p,i)=>'<article class="publication"><div>'+(p[0]?'<img class="pub-img" src="'+p[0]+'" alt="">':'<div class="pub-placeholder">'+String(i+1).padStart(2,"0")+'</div>')+'</div><div class="pub"><h3>'+p[1]+'</h3><p>'+p[2]+'</p><p><em>'+p[3]+'</em></p><p class="meta">'+p[4]+' <span class="links">'+link("Paper",p[5])+link("Code",p[6])+'</span></p></div></article>').join("");
+  document.getElementById("coauthorPublications").innerHTML=coauthors.map(p=>'<article class="compact pub"><h3>'+p[0]+'</h3><p>'+p[1]+'</p><p><em>'+p[2]+'</em></p><p class="meta">'+p[3]+' <span class="links">'+link("Paper",p[4])+link("Code",p[5])+'</span></p></article>').join("");
+}
+function renderLanguage(){
+  document.documentElement.lang=lang==="en"?"en":"zh-CN";
+  document.querySelectorAll("[data-en][data-zh]").forEach(el=>{el.textContent=el.dataset[lang]});
+  document.querySelectorAll(".lang-list").forEach(el=>{el.innerHTML=el.dataset[lang].split("|").map(x=>"<li>"+x+"</li>").join("")});
+  document.getElementById("awardRows").innerHTML=awards.map(a=>lang==="en"?"<li><span class='award-year'>"+a[4]+"</span>, "+a[0]+" <span class='award-organizer'>("+a[2]+")</span></li>":"<li><span class='award-year'>"+a[4]+"年</span>，"+a[1]+" <span class='award-organizer'>（"+a[3]+"）</span></li>").join("");
+  document.getElementById("languageButton").textContent=lang==="en"?"中文":"English";
+}
+document.getElementById("languageButton").addEventListener("click",()=>{lang=lang==="en"?"zh":"en";renderLanguage()});
+renderPublications();renderLanguage();
+</script>
 </body>
 </html>
